@@ -1,63 +1,160 @@
-# Apple Design Agent Skill (Executable Spec)
+# Apple Design Agent Skill (Universal Runtime Spec)
 
-## 1. Purpose
-This skill converts Apple’s design philosophy into an executable reasoning system for AI agents that generate, evaluate, and refine UI/UX.
+## 0. Skill Identity (Agent-Compatible Manifest)
 
-It is optimized for:
-- UI generation
-- Product design critique
-- Interaction modeling
-- Agent interface design
+```yaml
+name: apple-design-skill
+version: 2.0.0
+type: design-evaluator-generator
+runtime_compatibility:
+  - claude-code
+  - codex
+  - generic-agent
+  - tool-using-llm
+input_modes:
+  - ui_spec
+  - natural_language_prompt
+  - wireframe_description
+output_mode: structured_evaluation_and_improvement
+```
 
 ---
 
-## 2. Core Design Principles
+## 1. Purpose
 
-### Clarity
+This skill converts Apple Design principles into a **portable, agent-executable design intelligence module**.
+
+It enables agents to:
+
+- Generate UI/UX under cognitive constraints
+- Evaluate interface quality
+- Detect UX anti-patterns
+- Produce improved design iterations
+
+It is NOT a guideline. It is a **runtime constraint + evaluation system**.
+
+---
+
+## 2. Activation Rules (When to use this skill)
+
+Activate this skill when the task involves:
+
+- UI generation or redesign
+- UX critique or review
+- Product flow design
+- Interaction design decisions
+- Agent UI planning
+
+DO NOT use for:
+- Pure visual styling requests without interaction logic
+- Non-product creative writing
+
+---
+
+## 3. Input Contract
+
+The skill accepts one of the following inputs:
+
+### A. Natural Language Prompt
+```text
+Design a mobile onboarding flow for a finance app
+```
+
+### B. UI Specification
+```json
+{
+  "screen": "login",
+  "components": [...],
+  "constraints": [...]
+}
+```
+
+### C. Wireframe Description
+```text
+Top: title
+Middle: form input
+Bottom: CTA button
+```
+
+---
+
+## 4. Core Design Principles
+
+### 4.1 Clarity (Zero Ambiguity Rule)
 - User must never guess meaning
-- Every screen answers:
+- Every screen must answer:
   - Where am I?
   - What can I do?
   - What happens next?
 
-### Deference
-- UI is subordinate to content
-- Content is always primary signal
-- UI should minimize visual competition
+### 4.2 Deference (Content Priority Rule)
+- Content > UI chrome
+- UI must never compete with content
+- Reduce visual noise
 
-### Depth
-- Motion explains structure
-- Layers explain hierarchy
-- Transitions explain causality
-
----
-
-## 3. UX Heuristics Engine
-
-### Cognitive Load Minimization
-- Reduce decisions, not capability
-- Use progressive disclosure
-
-### Invisible Interface
-- Interface disappears in task execution
-
-### Physical Metaphor Consistency
-- Drag = physical drag
-- Motion = causality
-
-### System Consistency
-- Same gesture = same meaning
-- Cross-screen predictability required
-
-### Effort Compression Delight
-- Delight = fewer steps, not more features
+### 4.3 Depth (Causal Structure Rule)
+- Motion explains state transitions
+- Layers represent hierarchy
+- Navigation reflects spatial logic
 
 ---
 
-## 4. Interaction Rules
+## 5. Constraint System (Hard Rules)
+
+Reject or flag design if:
+
+- UI competes with content for attention
+- Multiple primary actions exist on same hierarchy level
+- Interaction meaning changes across screens
+- Motion has no causal explanation
+- Layout introduces cognitive ambiguity
+
+---
+
+## 6. Evaluation Engine (Scoring Model)
+
+Each design is evaluated on a 0–5 scale:
+
+- Clarity Score
+- Content Dominance Score
+- Interaction Predictability Score
+- Spatial Coherence Score
+- Cognitive Load Score (inverse)
+
+Final Score = weighted average
+
+---
+
+## 7. Output Contract (STRICT FORMAT)
+
+All outputs MUST follow this structure:
+
+```json
+{
+  "summary": "short explanation of design decision",
+  "score": {
+    "clarity": 0-5,
+    "content_dominance": 0-5,
+    "predictability": 0-5,
+    "spatial_coherence": 0-5,
+    "cognitive_effort": 0-5
+  },
+  "violations": [
+    "list of rule violations"
+  ],
+  "improvements": [
+    "actionable redesign suggestions"
+  ],
+  "recommended_design": "improved UI or flow description"
+}
+```
+
+---
+
+## 8. Interaction Model Rules
 
 ### Motion
-- Motion must explain state transitions
+- Motion must explain system state transitions
 - No decorative animation allowed
 
 ### Layout
@@ -65,50 +162,57 @@ It is optimized for:
 - Spacing encodes importance
 
 ### Input
-- Direct manipulation preferred
-- Avoid mode switching
+- Prefer direct manipulation
+- Avoid mode switching complexity
 
 ---
 
-## 5. Anti-Pattern Detector
-Reject if:
-- UI explains UI
-- Multiple competing primary actions
-- Inconsistent gesture meanings
-- Animation without causal logic
-- Visual noise exceeds content signal
+## 9. Anti-Pattern Detection
+
+Flag if any of the following exist:
+
+- UI explaining UI instead of content
+- Competing primary actions
+- Inconsistent gesture semantics
+- Hidden system state
+- Excessive visual decoration
 
 ---
 
-## 6. Scoring System (0–5)
+## 10. Agent Prompt Template
 
-- Clarity Score
-- Content Dominance Score
-- Spatial Understanding Score
-- Consistency Score
-- Effort Compression Score
+Use this template when invoking the skill:
 
-Final Score = weighted average
+```text
+You are a Design Evaluation Agent.
 
----
-
-## 7. Agent Prompt Template
-
-You are an Apple Design Agent.
-
-Evaluate or generate UI using:
+Apply Apple Design constraints:
 - Clarity
 - Deference
 - Depth
 
-Optimize for:
-- Minimal cognitive load
-- Predictable interaction model
-- Motion as explanation
-- Invisible interface effect
+Task:
+{user_input}
 
-Return:
-1. Design rationale
-2. Structure explanation
-3. Anti-pattern check
-4. Improvement suggestions
+Return structured JSON evaluation only.
+```
+
+---
+
+## 11. System Philosophy
+
+This skill defines design as:
+
+> a constrained optimization problem over cognition, predictability, and interaction cost
+
+NOT aesthetic preference.
+
+---
+
+## 12. Compatibility Note
+
+This skill is designed to be:
+
+- Claude Code compatible (structured reasoning + tool output)
+- Codex compatible (deterministic JSON output)
+- Generic LLM compatible (prompt-in / structured-out)
